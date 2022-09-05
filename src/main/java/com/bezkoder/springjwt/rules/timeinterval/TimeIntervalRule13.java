@@ -19,8 +19,11 @@ public class TimeIntervalRule13 extends ExtractionRule {
     protected Locale locale = Locale.US;
     protected double confidence = 0.8;
     private int priority = 5;
-    private String rule = "\\b(([01]?[0-9]|2[0-3])[:]([0-5][0-9])[\\s]*[-|�|to][\\s]*([01]?[0-9]|2[0-3])[:]([0-5][0-9]))\\b";
-    protected String example = "20:22 to 23:30";
+    private String rule = "\\b(saat\\s)?([01]?[0-9]|2[0-3])(\\s)?(\\.|,|:)([0-5][0-9])('|\\s*)(den|dan|ten|tan)(\\s)(saat\\s)?([01]?[0-9]|2[0-3])(\\s)?(\\.|,|:)([0-5][0-9])('|\\s*)(e|a|ye|ya)((\\s)kadar)?\\b";
+    private String ruleEn = "\\b(([01]?[0-9]|2[0-3])[:]([0-5][0-9])[\\s]*[-|�|to][\\s]*([01]?[0-9]|2[0-3])[:]([0-5][0-9]))\\b";
+   
+    protected String example = "20:22'den 23:30'a, saat 20.22'den 23.30'a kadar";
+    protected String exampleEn = "20:22 to 23:30";
     protected UUID id = UUID.fromString("c444e037-eb63-4e73-a6e2-c9db29f1b8c9");
 
     public TimeIntervalRule13() {
@@ -48,16 +51,16 @@ public class TimeIntervalRule13 extends ExtractionRule {
             timeFrom.setHours(hours);
 
         }
-        if (m.group(3) != null) {
-            timeFrom.setMinutes(Integer.parseInt(m.group(3)));
+        if (m.group(5) != null) {
+            timeFrom.setMinutes(Integer.parseInt(m.group(5)));
         }
-        if (m.group(4) != null) {
-            int hours = Integer.parseInt(m.group(4));
+        if (m.group(10) != null) {
+            int hours = Integer.parseInt(m.group(10));
             timeTo.setHours(hours);
         }
 
-        if (m.group(5) != null) {
-            timeTo.setMinutes(Integer.parseInt(m.group(5)));
+        if (m.group(13) != null) {
+            timeTo.setMinutes(Integer.parseInt(m.group(13)));
         }
 
         start.setTime(timeFrom);

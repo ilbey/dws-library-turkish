@@ -21,8 +21,11 @@ public class TimeIntervalRule15 extends ExtractionRule {
     protected Locale locale = Locale.US;
     protected double confidence = 0.8;
     private int priority = 5;
-    private String rule = "\\b((from|between)[\\s]*)([01]?[0-9]|2[0-3])[\\s]*(to|and)[\\s]*([01]?[0-9]|2[0-3])[\\s]*[.|:]([0-5][0-9])";
-    protected String example = "from 20 to 21.30";
+    private String rule = "\\b(saat\\s)?([01]?[0-9]|2[0-3])('|\\s*)(den|dan|ten|tan)(\\s)(saat\\s)?([01]?[0-9]|2[0-3])(\\s)?(\\.|,|:)([0-5][0-9])('|\\s*)(e|a|ye|ya)((\\s)kadar)?\\b";
+    private String ruleEn = "\\b((from|between)[\\s]*)([01]?[0-9]|2[0-3])[\\s]*(to|and)[\\s]*([01]?[0-9]|2[0-3])[\\s]*[.|:]([0-5][0-9])";
+    protected String example = "20'den 21.30'a, saat 20'den 21:30'a, saat 20'den saat 21.30'a kadar";
+    //saat 20'den saat 21.30'a kadar hatalı
+    protected String exampleEn = "from 20 to 21.30";
     protected UUID id = UUID.fromString("ee72d702-edee-4431-80f5-15fa34b108bc");
 
     public TimeIntervalRule15() {

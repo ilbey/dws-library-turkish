@@ -13,7 +13,7 @@ public class TodayTomorrowEtc extends ExtractionRule {
     private double confidence = 0.9;
     private int priority = 2;
     protected String ruleEn = "\\b((today)|(yesterday)|(tomorrow)|(the day before yesterday)|(tonight))\\b";
-    protected String rule = "\\b((bugün)|(dün)|(yarın)|(önceki gün)|(ertesi gün)|(bu gece))";
+    protected String rule = "\\b((bugün)|(dün)|(yarın)|(önceki gün)|(ertesi gün)|(bu gece))\\b";
     protected String example = "today, tomorrow, yesterday, the day before yesterday, tonight";
     protected UUID id = UUID.fromString("315f23c5-90da-4b2c-8d32-c9249d18aa75");
 

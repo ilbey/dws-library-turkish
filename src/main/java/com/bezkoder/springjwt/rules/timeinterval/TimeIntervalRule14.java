@@ -21,11 +21,14 @@ import com.bezkoder.springjwt.temporal.entities.Type;
 public class TimeIntervalRule14 extends ExtractionRule
 
 {
-    private String rule = "(" + TemporalConstants.DAY_OF_WEEK + "|" + TemporalConstants.DAY_OF_WEEK_EASY + ")[,]?[\\s]*\\b([01]?[0-9]|2[0-3])[-]([01]?[0-9]|2[0-3])\\b";
+    private String rule = "\\b(" + TemporalConstants.DAY_OF_WEEK + "|" + TemporalConstants.DAY_OF_WEEK_EASY + ")[,]?[\\s]*([01]?[0-9]|2[0-3])(\\s)?(\\.|,|:)([0-5][0-9])(\\s|')(ile|le|la)\\s([01]?[0-9]|2[0-3])(\\s)?(\\.|,|:)([0-5][0-9])\\s(arası)\\b";
+    private String ruleEn = "(" + TemporalConstants.DAY_OF_WEEK + "|" + TemporalConstants.DAY_OF_WEEK_EASY + ")[,]?[\\s]*\\b([01]?[0-9]|2[0-3])[-]([01]?[0-9]|2[0-3])\\b";
+    
+    protected String example = "Pazartesi 11.00'le 16.00 arası, Salı 12:00 ile 13:00 arasında";
+    protected String exampleEn = "Monday, 11-16";
     protected Locale locale = Locale.US;
     protected double confidence = 0.5;
-    private int priority = 4;
-    protected String example = "Monday, 11-16";
+    private int priority = 5;
     protected UUID id = UUID.fromString("f4ffb605-f71d-4860-b9cd-8cde74cb603b");
 
     public TimeIntervalRule14() {
@@ -47,9 +50,9 @@ public class TimeIntervalRule14 extends ExtractionRule
         Date datefrom = new Date();
         Date dateTo = new Date();
 
-        if (m.group(1) != null) {
+        if (m.group(2) != null) {
             DayOfWeek dayOfWeek = null;
-            dayOfWeek = TemporalBasicCaseParser.getDayOfWeek(m.group(1));
+            dayOfWeek = TemporalBasicCaseParser.getDayOfWeek(m.group(2));
 
             if (dayOfWeek != null) {
                 datefrom.setDayOfWeek(dayOfWeek);
@@ -57,10 +60,23 @@ public class TimeIntervalRule14 extends ExtractionRule
 
             }
         }
-        int hoursFrom = Integer.parseInt(m.group(4));
-        int hoursTo = Integer.parseInt(m.group(5));
-        timeFrom.setHours(hoursFrom);
-        timeTo.setHours(hoursTo);
+
+        if (m.group(4) != null) {
+            timeFrom.setHours(Integer.parseInt(m.group(4)));
+
+        }
+        if (m.group(7) != null) {
+            timeFrom.setMinutes(Integer.parseInt(m.group(7)));
+        }
+        if (m.group(10) != null) {
+            timeTo.setHours(Integer.parseInt(m.group(10)));
+        }
+
+        if (m.group(13) != null) {
+            timeTo.setMinutes(Integer.parseInt(m.group(13)));
+        }
+
+
         start.setDate(datefrom);
         start.setTime(timeFrom);
         end.setDate(dateTo);

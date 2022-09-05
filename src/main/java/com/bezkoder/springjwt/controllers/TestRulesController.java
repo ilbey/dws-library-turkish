@@ -20,8 +20,8 @@ import com.bezkoder.springjwt.utils.SettingsBuilder;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class TestRulesController extends BaseController{
-    private static String TRAINING_DATA = System.getProperty("user.dir") + "/data/train.csv";
-    private static String TEST_RESULTS_FILE = System.getProperty("user.dir") + "/data/results.txt";
+    private static String TRAINING_DATA = System.getProperty("user.dir") + "/dws-library-turkish/data/train.csv";
+    private static String TEST_RESULTS_FILE = System.getProperty("user.dir") + "/dws-library-turkish/data/results.txt";
 
     @GetMapping("/testRule")
     public String testRule() throws Exception {
